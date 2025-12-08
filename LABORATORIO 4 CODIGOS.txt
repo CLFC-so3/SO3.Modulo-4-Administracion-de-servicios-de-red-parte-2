@@ -227,28 +227,130 @@ mail -s "Este es el asunto" elsuperhacker0@gmail.com < prueba_de_fe.txt
 
 
 Video 3 
-Sudo dnf install cups cups-pdf ghostscript
-Sudo systemctl enable cups
-Sudo systemctl start cups
-Sudo systemctl status cups
+cups pdf 
 
-Sudo firewall-cmd --permanent --add-service=ipp
-Sudo firewall-cmd --permanent --add-service=ipp-client
-Sudo firewall-cmd --permanent --add-service=mdns
-Sudo firewall-cmd –reload
+comandos:
+sudo dnf install cups cups-pdf ghostscript
+sudo systemctl enable cups
+sudo systemctl start cups
+sudo systemctl status cups
 
-Sudo nano /etc/cups/cupsd.conf
-Cambiar listen por port 631
-Y añadir allow all a server, admin page y configuration files y log files
+sudo firewall-cmd --permanent --add-service=ipp
+sudo firewall-cmd --permanent --add-service=ipp-client
+sudo firewall-cmd --permanent --add-service=mdns
+sudo firewall-cmd --permanent --add-port=631/tcp
+sudo firewall-cmd --reload
 
-Sudo systemctl restart cups
-http://tu_ip:631 
+nano /etc/cups/cupsd.conf
+
+------------------------------------------------------------------------------------
+
+Cambiar 
+
+Antes:
+Listen localhost:631
+
+
+Después:
+Port 631
+
+------------------------------------------------------------------------------------
+
+PRESTA ATENCION TU BUEN LOCON (fíjate en los allow all y donde los pones pa que no me dañe todo):
+
+ANTES: 
+
+# Restrict access to the server...
+<Location />
+  Order allow,deny
+</Location>
+
+
+# Restrict access to the admin pages...
+<Location /admin>
+  AuthType Default
+  Require user @SYSTEM
+  Order allow,deny
+</Location>
+
+# Restrict access to configuration files...
+<Location /admin/conf>
+  AuthType Default
+  Require user @SYSTEM
+  Order allow,deny
+</Location>
+
+# Restrict access to log files...
+<Location /admin/log>
+  AuthType Default
+  Require user @SYSTEM
+  Order allow,deny
+</Location>
+
+
+DESPUES: 
+
+# Restrict access to the server...
+<Location />
+  Order allow,deny
+  Allow All
+</Location>
+
+
+# Restrict access to the admin pages...
+<Location /admin>
+  AuthType Default
+  Require user @SYSTEM
+  Order allow,deny
+  Allow All
+</Location>
+
+# Restrict access to configuration files...
+<Location /admin/conf>
+  AuthType Default
+  Require user @SYSTEM
+  Order allow,deny
+  Allow All
+</Location>
+
+# Restrict access to log files...
+<Location /admin/log>
+  AuthType Default
+  Require user @SYSTEM
+  Order allow,deny
+  Allow All
+</Location>
+
+--------------------------------------------------------------------------------------------
+
+systemctl restart cups
+http://10.0.0.70:631/admin
+
+Fedora:
+Añadir impresora > Seleccionar "CUPS-PDF (Virtual PDF Printer)" > Asignar nombre "CARLOZ", descripción y seleccionar "Compartir esta impresora" > Seleccionar la marca "Generic" > Seleccionar los drivers "Generic CUPS-PDF Printer (no options) (en)" > Añadir Impresora
+
+Copiar:
+http://127.0.0.1:631/printers/CARLOZ
+recordar que sea http y no https
+cambiar direccion loopback por direccion IP
+o sea
+http://10.0.0.70:631/printers/CARLOZ
+
+Windows:
+Configuración > Bluetooth y dispositivos > Impresoras y scaners > Agregar dispositivo > Agregar dispositivo manualmente > Seleccionar una impresora compartida por nombre y pegar http://10.0.0.70:631/printers/CARLOZ > Siguiente > Generic > Text Only > Siguiente
+
+En word:
+crear un doc e imprimirlo con esta impresora
+
+Fedora: 
+CARLOZ > Mostrar trabajos completados
 
 
 
 
 
  
+
 
 
 
