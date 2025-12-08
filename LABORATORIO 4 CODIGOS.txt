@@ -75,64 +75,155 @@ sudo systemctl restart httpd
 #/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/
 
 Video 2
-Sudo dnf install postfix* -y && sudo dnf install mail* -y
-Cd /etc/postfix
 
-Sudo vi main.cf
-AGREGAR ABAJO
-Myhostname = carlos.ro.com
-Mydomain = carlos.rod.com
+postifx
 
-DESCOMENTAR
-Myorigin = $mydomain
+sudo dnf install postfix* -y && sudo dnf install mail* -y
 
-DESCOMENTAR Y EDITAR
-Mynetworks = tuIP/tuMASCARA , tuLOOPBACK/tuMASCARA
+cd /etc/postfix
+nano main.cf
 
-AGREGAR ABAJO
-Relayhost = [smtp.gmail.com]:587
+-----------------------------------------------
 
-COMENTAR
+DEBAJO DE 
+#myhostname = host.domain.tld
+#myhostname = virtual.domain.tld
+
+AGREGAR:
+myhostname = carlos.ro.com
+
+----------------------------------------------
+
+DEBAJO DE 
+#mydomain = domain.tld
+
+AGREGAR:
+mydomain = carlos.rod.com
+
+--------------------------------------------------------------------------------------------
+
+DESCOMENTAR:
+
+comentado:
+#myorigin = $mydomain
+
+descomentado
+myorigin = $mydomain
+
+--------------------------------------------------------------------------------------------
+
+EN ESTA SECCION, DESCOMENTAR LA PRIMERA Y AGREGAR NUESTRA IP CORRECTAMENTE
+
+ANTES:
+
+#mynetworks = 192.168.3.0/28, 127.0.0.0/8
+#mynetworks = $config_directory/mynetworks
+#mynetworks = hash:/etc/postfix/network_table
+
+DESPUES:
+
+mynetworks = 10.0.0.70/24, 127.0.0.0/8
+#mynetworks = $config_directory/mynetworks
+#mynetworks = hash:/etc/postfix/network_table
+
+--------------------------------------------------------------------------------------------
+
+EN ESTA SECCION AÑADIR EL RELAYHOST
+
+ANTES:
+
+#relayhost = $mydomain
+#relayhost = [gateway.my.domain]
+#relayhost = [mailserver.isp.tld]
+#relayhost = uucphost
+#relayhost = [an.ip.add.ress]
+
+DESPUES
+
+#relayhost = $mydomain
+#relayhost = [gateway.my.domain]
+#relayhost = [mailserver.isp.tld]
+#relayhost = uucphost
+#relayhost = [an.ip.add.ress]
+relayhost = [smtp.gmail.com]
+
+--------------------------------------------------------------------------------------------
+
+AL FONDO, COMENTAR
+
+ANTES:
+
+smtp_tls_security_level = may
+meta_directory = /etc/postfix
+shlib_directory = /usr/lib64/postfix
+
+DESPUES:
+
 #smtp_tls_security_level = may
+meta_directory = /etc/postfix
+shlib_directory = /usr/lib64/postfix
+
+--------------------------------------------------------------------------------------------
+
+AL FONDO, AGREGAR
+
+ANTES
+
+#smtp_tls_security_level = may
+meta_directory = /etc/postfix
+shlib_directory = /usr/lib64/postfix
+
+DESPUES
+
+#smtp_tls_security_level = may
+meta_directory = /etc/postfix
+shlib_directory = /usr/lib64/postfix
+
+
+smtp_use_tls = yes
+smtp_sasl_auth_enable =	yes
+smtp_tls_security_level	= encrypt
+smtp_sasl_security_options = 
+smtp_sasl_password_maps	= hash:/etc/postfix/sasl_passwd
+
+--------------------------------------------------------------------------------------------
+
+
+-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.-.
+
+ir al navegador: contraseña de aplicaciones (en la cuenta que se vaya a hacer esto se debe de tener activado la verificación en dos pasos)
+
+Hacer click en "Crea y administra las contraseñas de aplicaciones"
+iniciar sesión con tu correo
+Crear la contraseña
+pegar contraseña tal cual, con los espacios ("bkju wtly yoid itjm ")
+
+nano sasl_passwd
+[smtp.gmail.com]:587 felizc4rl0s@gmail.com:bkju wtly yoid itjm 
+
+Ctrl + O
+Enter
+Ctrl + X
 
 
 
+postmap sasl_passwd
+chmod 777 sasl_passwd 
+systemctl enable postfix
+systemctl restart postfix
 
+---------------------------------------------------------------------
+nano prueba_de_fe.txt
 
-
-
-
-
-AGREGAR ABAJO AL FONDO
-
-Smtp_use_tls = yes
-Smtp_sasl_auth_enable = yes
-Smtp_tls_security_level = encrypt
-
-Smtp_sasl_security_options = 
-Smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
-:wq
-
-Vi sasl_passwd
-[smtp.gmail.com]:587 felizc4rl0s@gmail.com:contraseña de aplicación
-:wq
-
-Postmap sasl_passwd
-Chmod 777 sasl_passwd
-Systemctl restart postfix
-
-Vi correo.txt
 Carlos Luis Feliz Catano
-20250892
-Sistemas Operativos 3
-Adrian Alcantara 
+Esto es para saber que estas preparado con Adrian, ten suerte mi hijo 
 
-Laboratorio 4.2 
-:wq
+---------------------------------------------------------------------
 
-Mail -s “prueba de fe” elsuperhacker0@gmail.com < correo.txt
+dnf install mail -y
+mail -s "Este es el asunto" elsuperhacker0@gmail.com < prueba_de_fe.txt
 
-
+#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/
 
 
 Video 3 
@@ -158,5 +249,6 @@ http://tu_ip:631
 
 
  
+
 
 
