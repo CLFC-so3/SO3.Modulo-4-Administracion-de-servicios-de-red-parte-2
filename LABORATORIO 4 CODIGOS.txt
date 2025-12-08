@@ -1,17 +1,17 @@
 Video 1
 
-Sudo dnf install httpd 
-Sudo systemctl enable httpd
-Sudo systemctl start httpd
-Sudo systemctl status httpd
-Sudo firewall-cmd –permanent  – -add-service=http
-Sudo firewall-cmd –permanent  – -add-service=https
-Sudo firewall-cmd --permanent --add-port=80/tcp
-Sudo firewall-cmd –reload
+sudo dnf install httpd 
+sudo systemctl enable httpd
+sudo systemctl start httpd
+sudo systemctl status httpd
+sudo firewall-cmd –permanent  – -add-service=http
+sudo firewall-cmd –permanent  – -add-service=https
+sudo firewall-cmd --permanent --add-port=80/tcp
+sudo firewall-cmd –reload
 
-Sudo mkdir -p /var/www/holamundo/html
+sudo mkdir -p /var/www/holamundo/html
 
-Sudo nano /var/www/holamundo/html/index.html
+sudo nano /var/www/holamundo/html/index.html
 <!DOCTYPE html>
 <html>
 <body>
@@ -22,14 +22,9 @@ Ctrl + O
 Enter
 Ctrl + X
 
+-------------------------------------------------------------------------------
 
-
-
-
-
-
-
-Sudo nano /etc/httpd/conf.d/holamundo.conf
+sudo nano /etc/httpd/conf.d/holamundo.conf
 <VirtualHost *:80>
           ServerName localhost
           DocumentRoot /var/www/holamundo/html
@@ -42,6 +37,7 @@ sudo nano /etc/httpd/conf/httpd.conf
 Listen 80
 sudo systemctl restart httpd
 
+--------------------------------------------------------------------------------
 
 sudo mkdir -p /var/www/personal/html
 sudo nano /var/www/personal/html/index.html
@@ -58,11 +54,15 @@ Ctrl + O
 Enter
 Ctrl + X
 
-
+-----------------------------------------------------------------------------------
 
 sudo nano /etc/httpd/conf/httpd.conf
+Listen 80
 Listen 8080
-Sudo nano /etc/httpd/conf.d/personal.conf
+
+-----------------------------------------------------------------------------------
+
+sudo nano /etc/httpd/conf.d/personal.conf
 <VirtualHost *:8080>
           ServerName localhost
           DocumentRoot /var/www/personal/html
@@ -72,24 +72,7 @@ Enter
 Ctrl + X
 sudo systemctl restart httpd
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/#/
 
 Video 2
 Sudo dnf install postfix* -y && sudo dnf install mail* -y
@@ -175,4 +158,5 @@ http://tu_ip:631
 
 
  
+
 
