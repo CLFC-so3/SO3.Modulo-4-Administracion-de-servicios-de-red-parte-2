@@ -4,9 +4,10 @@ Sudo dnf install httpd
 Sudo systemctl enable httpd
 Sudo systemctl start httpd
 Sudo systemctl status httpd
-Sudo firewall-cmd –permanent  – -add-service=http
-Sudo firewall-cmd –permanent  – -add-service=https
-Sudo firewall-cmd –reload
+Sudo firewall-cmd â€“permanent  â€“ -add-service=http
+Sudo firewall-cmd â€“permanent  â€“ -add-service=https
+Sudo firewall-cmd --permanent --add-port=80/tcp
+Sudo firewall-cmd â€“reload
 
 Sudo mkdir -p /var/www/holamundo/html
 
@@ -130,7 +131,7 @@ Smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 :wq
 
 Vi sasl_passwd
-[smtp.gmail.com]:587 felizc4rl0s@gmail.com:contraseña de aplicación
+[smtp.gmail.com]:587 felizc4rl0s@gmail.com:contraseÃ±a de aplicaciÃ³n
 :wq
 
 Postmap sasl_passwd
@@ -146,7 +147,7 @@ Adrian Alcantara
 Laboratorio 4.2 
 :wq
 
-Mail -s “prueba de fe” elsuperhacker0@gmail.com < correo.txt
+Mail -s â€œprueba de feâ€ elsuperhacker0@gmail.com < correo.txt
 
 
 
@@ -160,11 +161,11 @@ Sudo systemctl status cups
 Sudo firewall-cmd --permanent --add-service=ipp
 Sudo firewall-cmd --permanent --add-service=ipp-client
 Sudo firewall-cmd --permanent --add-service=mdns
-Sudo firewall-cmd –reload
+Sudo firewall-cmd â€“reload
 
 Sudo nano /etc/cups/cupsd.conf
 Cambiar listen por port 631
-Y añadir allow all a server, admin page y configuration files y log files
+Y aÃ±adir allow all a server, admin page y configuration files y log files
 
 Sudo systemctl restart cups
 http://tu_ip:631 
@@ -174,3 +175,4 @@ http://tu_ip:631
 
 
  
+
